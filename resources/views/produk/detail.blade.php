@@ -49,7 +49,7 @@
                     <td>Nama Produk</td>
                     <td>{{ $data->nama_produk }}</td>
                     <td rowspan="4">
-                        <img src="{{ asset('storage/images/barang/'.$data->gambar) }}" width="150" alt="Gambar Produk">
+                        <img src="{{ asset('storage/images/barang/' . $data->gambar) }}" width="150" alt="Gambar Produk">
                     </td>
                 </tr>
                 <tr>
@@ -64,7 +64,7 @@
                     <td>Deskripsi</td>
                     <td> {{ $data->deskripsi }}</td>
                 </tr>
-                
+
             </table>
         </div>
     </div>
@@ -74,23 +74,41 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit {{ $data->nama_kategori }}</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit {{ $data->nama_produk }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="{{ route('kategori.edit', $data->id) }}" method="post">
+                <form action="{{ route('produk.edit', $data->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    @method('put')
                     <div class="modal-body">
                         <div class="form-group mt-2">
-                            <label for="">Nama Kategori</label>
-                            <input type="text" required name="nama_kategori"
-                                value="{{ old('nama_kategori', $data->nama_kategori) }}" class="form-control">
+                            <label for="">Nama Produk</label>
+                            <input type="text" required value="{{ old('nama_produk', $data->nama_produk) }}" name="nama_produk" class="form-control">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="">Kategori</label>
+                            <select name="id_kategori" required class="form-control">
+                                <option value="{{ $data->id_kategori }}">-{{ $data->kategori->nama_kategori }}-</option>
+                                @foreach ($kategori as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama_kategori }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="">Harga</label>
+                            <input type="number" required value="{{ old('harga', $data->harga) }}" name="harga" class="form-control">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="">Stok</label>
+                            <input type="number" required value="{{ old('stok', $data->stok) }}" name="stok" class="form-control">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="">Gambar Produk</label>
+                            <input type="file" accept="image/*" name="gambar" class="form-control">
                         </div>
                         <div class="form-group mt-2">
                             <label for="">Deskripsi</label>
-                            <textarea name="deskripsi" required
-                                class="form-control">{{ old('deskripsi', $data->deskripsi) }}</textarea>
+                            <textarea name="deskripsi" required class="form-control">{{ old('nama_produk', $data->nama_produk) }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
