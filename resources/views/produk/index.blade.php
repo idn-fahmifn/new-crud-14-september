@@ -1,11 +1,11 @@
 @extends('template.app')
 
 @section('page-title')
-    Daftar Kategori Produk
+    Daftar Produk
 @endsection
 
 @section('sub-title')
-    Daftar kategori produk yang ada di <span class="text-success">tokopaedi</span>
+    Daftar produk yang ada di <span class="text-success">tokopaedi</span>
 @endsection
 
 @section('content')
@@ -50,28 +50,27 @@
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <thead>
-                    <th>Nama Kategori</th>
-                    <th>Deskripsi</th>
+                    <th>Nama Produk</th>
+                    <th>Kategori</th>
                     <th>Pilihan</th>
                 </thead>
                 <tbody>
                     @forelse ($data as $item)
                     <tr>
-                        <td>{{ $item->nama_kategori }}</td>
-                        <td>{{ Str::limit($item->deskripsi, 10, '...') }}</td>
+                        <td>{{ $item->nama_produk }}</td>
+                        <td>{{ $item->kategori }}</td>
                         <td>
-                            <form action="{{ route('kategori.destroy', $item->id) }}" method="post">
+                            <form action="{{ route('produk.destroy', $item->id) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <a href="{{ route('kategori.detail', $item->id) }}" class="btn text-info">Detail</a>
+                                <a href="{{ route('produk.detail', $item->id) }}" class="btn text-info">Detail</a>
                                 <button type="submit" class="btn text-danger" onclick="return confirm('yakin mau dihapus?')">Hapus</button>
-
                             </form>
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="3" class="text-center p-4">Data Kategori Kosong ! </td>
+                        <td colspan="3" class="text-center p-4">Data Produk Kosong ! </td>
                     </tr>
                     @endforelse
 
@@ -85,7 +84,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Produk</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -93,8 +92,29 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mt-2">
-                            <label for="">Nama Kategori</label>
-                            <input type="text" required name="nama_kategori" class="form-control">
+                            <label for="">Nama Produk</label>
+                            <input type="text" required name="nama_produk" class="form-control">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="">Kategori</label>
+                            <select name="id_kategori" required class="form-control">
+                                <option value="">-Pilih Kategori-</option>
+                                @foreach ($kategori as $item)
+                                <option value="{{ $item->id }}">{{ $item->nama_kategori }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="">Harga</label>
+                            <input type="number" required name="harga" class="form-control">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="">Stok</label>
+                            <input type="number" required name="stok" class="form-control">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="">Gambar Produk</label>
+                            <input type="file" required name="gambar" class="form-control">
                         </div>
                         <div class="form-group mt-2">
                             <label for="">Deskripsi</label>

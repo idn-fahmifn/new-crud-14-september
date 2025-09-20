@@ -1,11 +1,11 @@
 @extends('template.app')
 
 @section('page-title')
-    Daftar Kategori Produk
+    {{ $data->nama_kategori }}
 @endsection
 
 @section('sub-title')
-    Daftar kategori produk yang ada di <span class="text-success">tokopaedi</span>
+    {{ $data->deskripsi }}
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
                 {{-- button diambil dari dokumentasi modal --}}
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Tambah
+                    Edit {{ $data->nama_kategori }}
                 </button>
             </div>
         </div>
@@ -55,25 +55,7 @@
                     <th>Pilihan</th>
                 </thead>
                 <tbody>
-                    @forelse ($data as $item)
-                    <tr>
-                        <td>{{ $item->nama_kategori }}</td>
-                        <td>{{ Str::limit($item->deskripsi, 10, '...') }}</td>
-                        <td>
-                            <form action="{{ route('kategori.destroy', $item->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <a href="{{ route('kategori.detail', $item->id) }}" class="btn text-info">Detail</a>
-                                <button type="submit" class="btn text-danger" onclick="return confirm('yakin mau dihapus?')">Hapus</button>
-
-                            </form>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="3" class="text-center p-4">Data Kategori Kosong ! </td>
-                    </tr>
-                    @endforelse
+                    
 
                 </tbody>
             </table>
@@ -85,20 +67,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit {{ $data->nama_kategori }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="{{ route('kategori.store') }}" method="post">
+                <form action="{{ route('kategori.edit', $data->id) }}" method="post">
                     @csrf
+                    @method('put')
                     <div class="modal-body">
                         <div class="form-group mt-2">
                             <label for="">Nama Kategori</label>
-                            <input type="text" required name="nama_kategori" class="form-control">
+                            <input type="text" required name="nama_kategori" value="{{ old('nama_kategori', $data->nama_kategori) }}" class="form-control">
                         </div>
                         <div class="form-group mt-2">
                             <label for="">Deskripsi</label>
-                            <textarea name="deskripsi" required class="form-control"></textarea>
+                            <textarea name="deskripsi" required class="form-control">{{ old('deskripsi', $data->deskripsi) }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
