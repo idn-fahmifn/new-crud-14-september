@@ -1,29 +1,15 @@
 @extends('template.app')
 
 @section('page-title')
-    {{ $data->nama_kategori }}
+    {{ $data->nama_produk }}
 @endsection
 
 @section('sub-title')
-    {{ $data->deskripsi }}
+    {{ $data->kategori->nama_kategori }}
 @endsection
 
 @section('content')
     <div class="card p-2 mt-4">
-        <div class="d-flex justify-content-between">
-            <div class="">
-                <div class="card-title h6">Data Produk</div>
-                <span class="text-muted">sub title Lorem ipsum dolor sit amet.</span>
-            </div>
-            <div class="">
-                {{-- button diambil dari dokumentasi modal --}}
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Edit {{ $data->nama_kategori }}
-                </button>
-            </div>
-        </div>
-
         {{-- menampilkan alert error --}}
         @if ($errors->any())
             <div class="alert alert-warning alert-dismissible fade show my-3" role="alert">
@@ -44,20 +30,41 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-
-
-
-        <div class="table-responsive">
-            <table class="table table-hover table-striped">
-                <thead>
-                    <th>Nama Kategori</th>
-                    <th>Deskripsi</th>
-                    <th>Pilihan</th>
-                </thead>
-                <tbody>
-                    
-
-                </tbody>
+        <div class="d-flex justify-content-between">
+            <div class="">
+                <div class="card-title h5">Detail {{ $data->nama_produk }}</div>
+                <span class="text-muted">{{ $data->kategori->nama_kategori }}</span>
+            </div>
+            <div class="">
+                {{-- button diambil dari dokumentasi modal --}}
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Edit {{ $data->nama_kategori }}
+                </button>
+            </div>
+        </div>
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered">
+                <tr>
+                    <td>Nama Produk</td>
+                    <td>{{ $data->nama_produk }}</td>
+                    <td rowspan="4">
+                        <img src="{{ asset('storage/images/barang/'.$data->gambar) }}" width="150" alt="Gambar Produk">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Harga</td>
+                    <td>IDR. {{ number_format($data->harga) }}</td>
+                </tr>
+                <tr>
+                    <td>Stok</td>
+                    <td> {{ $data->stok }}</td>
+                </tr>
+                <tr>
+                    <td>Deskripsi</td>
+                    <td> {{ $data->deskripsi }}</td>
+                </tr>
+                
             </table>
         </div>
     </div>
@@ -77,11 +84,13 @@
                     <div class="modal-body">
                         <div class="form-group mt-2">
                             <label for="">Nama Kategori</label>
-                            <input type="text" required name="nama_kategori" value="{{ old('nama_kategori', $data->nama_kategori) }}" class="form-control">
+                            <input type="text" required name="nama_kategori"
+                                value="{{ old('nama_kategori', $data->nama_kategori) }}" class="form-control">
                         </div>
                         <div class="form-group mt-2">
                             <label for="">Deskripsi</label>
-                            <textarea name="deskripsi" required class="form-control">{{ old('deskripsi', $data->deskripsi) }}</textarea>
+                            <textarea name="deskripsi" required
+                                class="form-control">{{ old('deskripsi', $data->deskripsi) }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

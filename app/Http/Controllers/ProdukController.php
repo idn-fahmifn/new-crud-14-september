@@ -57,8 +57,8 @@ class ProdukController extends Controller
 
     public function detail($id)
     {
-        $data = Kategori::findOrFail($id);
-        return view('kategori.detail', compact('data'));
+        $data = Produk::findOrFail($id);
+        return view('produk.detail', compact('data'));
     }
 
     public function edit(Request $request, $id)
