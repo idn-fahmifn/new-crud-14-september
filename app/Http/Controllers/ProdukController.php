@@ -107,7 +107,11 @@ class ProdukController extends Controller
 
     public function destroy($id)
     {
-        $data = Kategori::findOrFail($id); //mencari data yang akan dihapus
+        $data = Produk::findOrFail($id); //mencari data yang akan dihapus
+        $old = 'public/images/barang/' . $data->gambar; //path gambar lama yang tersimpan di storage
+            if($data->gambar && Storage::exists($old)){
+                Storage::delete($old);
+            }
         $data->delete();
         return back()->with('success', 'Data berhasil dihapus');
     }

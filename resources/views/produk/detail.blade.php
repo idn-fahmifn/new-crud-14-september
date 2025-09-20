@@ -80,6 +80,7 @@
 
                 <form action="{{ route('produk.edit', $data->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
+                    @method('put')
                     <div class="modal-body">
                         <div class="form-group mt-2">
                             <label for="">Nama Produk</label>
