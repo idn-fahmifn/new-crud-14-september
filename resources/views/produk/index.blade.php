@@ -58,7 +58,7 @@
                     @forelse ($data as $item)
                     <tr>
                         <td>{{ $item->nama_produk }}</td>
-                        <td>{{ $item->kategori }}</td>
+                        <td>{{ $item->kategori->nama_kategori }}</td>
                         <td>
                             <form action="{{ route('produk.destroy', $item->id) }}" method="post">
                                 @csrf
@@ -88,7 +88,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="{{ route('kategori.store') }}" method="post">
+                <form action="{{ route('produk.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mt-2">
@@ -114,7 +114,7 @@
                         </div>
                         <div class="form-group mt-2">
                             <label for="">Gambar Produk</label>
-                            <input type="file" required name="gambar" class="form-control">
+                            <input type="file" accept="image/*" required name="gambar" class="form-control">
                         </div>
                         <div class="form-group mt-2">
                             <label for="">Deskripsi</label>

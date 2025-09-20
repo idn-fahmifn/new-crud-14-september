@@ -8,4 +8,12 @@ class Produk extends Model
 {
     protected $table = 'produk';
     protected $guarded;
+
+    // relationship
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'id_kategori');
+    }
+
+
 }
