@@ -33,4 +33,25 @@ class KategoriController extends Controller
         return view('kategori.detail', compact('data'));
     }
 
+    public function edit(Request $request, $id)
+    {
+        $data = Kategori::findOrFail($id); //mencari data yang akan diedit
+        $request->validate([
+            'nama_kategori' => ['string', 'required','min:3', 'max:20'],
+            'deskripsi' => ['required'],
+        ]);
+        $data->update([
+            'nama_kategori' => $request->nama_kategori,
+            'deskripsi' => $request->deskripsi
+        ]);
+        return back()->with('success', 'Data berhasil dibuat');
+    }
+
+    public function destroy($id)
+    {
+        $data = Kategori::findOrFail($id); //mencari data yang akan dihapus
+        $data->delete();
+        return back()->with('success', 'Data berhasil dihapus');
+    }
+
 }

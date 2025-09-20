@@ -19,7 +19,7 @@
                 {{-- button diambil dari dokumentasi modal --}}
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Tambah
+                    Edit {{ $data->nama_kategori }}
                 </button>
             </div>
         </div>
@@ -67,20 +67,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit {{ $data->nama_kategori }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="" method="post">
+                <form action="{{ route('kategori.edit', $data->id) }}" method="post">
                     @csrf
+                    @method('put')
                     <div class="modal-body">
                         <div class="form-group mt-2">
                             <label for="">Nama Kategori</label>
-                            <input type="text" required name="nama_kategori" class="form-control">
+                            <input type="text" required name="nama_kategori" value="{{ old('nama_kategori', $data->nama_kategori) }}" class="form-control">
                         </div>
                         <div class="form-group mt-2">
                             <label for="">Deskripsi</label>
-                            <textarea name="deskripsi" required class="form-control"></textarea>
+                            <textarea name="deskripsi" required class="form-control">{{ old('deskripsi', $data->deskripsi) }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -60,10 +60,10 @@
                         <td>{{ $item->nama_kategori }}</td>
                         <td>{{ Str::limit($item->deskripsi, 10, '...') }}</td>
                         <td>
-                            <form action="" method="post">
+                            <form action="{{ route('kategori.destroy', $item->id) }}" method="post">
                                 @csrf
-
-                                <a href="" class="btn text-info">Detail</a>
+                                @method('delete')
+                                <a href="{{ route('kategori.detail', $item->id) }}" class="btn text-info">Detail</a>
                                 <button type="submit" class="btn text-danger">Hapus</button>
 
                             </form>

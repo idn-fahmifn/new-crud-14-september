@@ -10,6 +10,8 @@ Route::get('/', function () {
 Route::get('kategori', [KategoriController::class, 'index'])->name('kategori.index');
 Route::post('kategori', [KategoriController::class, 'store'])->name('kategori.store');
 Route::get('kategori/{param}', [KategoriController::class, 'detail'])->name('kategori.detail');
+Route::put('kategori/{param}', [KategoriController::class, 'edit'])->name('kategori.edit');
+Route::delete('kategori/{param}', [KategoriController::class, 'edit'])->name('kategori.edit');
 
 
 Route::view('tampilan', 'template.app');
